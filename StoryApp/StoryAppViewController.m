@@ -7,9 +7,10 @@
 //
 
 #import "StoryAppViewController.h"
+#import "StoryAppModel.h"
 
 @interface StoryAppViewController ()
-
+@property (nonatomic,strong) StoryAppModel *tellStory;
 @end
 
 @implementation StoryAppViewController
@@ -26,4 +27,15 @@
     // Dispose of any resources that can be recreated.
 }
 
+-(StoryAppModel *) tellStory {
+    if(!_tellStory) _tellStory = [[StoryAppModel alloc] init];
+    return _tellStory;
+}
+
+- (IBAction)submitStory:(id)sender {
+    [self.charName resignFirstResponder];
+    NSString* story = [self.tellStory tellStory:self.charName.text withEnding:self.isTragic.on];
+    self.finalStory.text = [NSString stringWithFormat:@"%@", story];
+    self.finalStory.numberOfLines = 0;
+}
 @end
